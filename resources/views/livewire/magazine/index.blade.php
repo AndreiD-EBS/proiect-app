@@ -3,12 +3,16 @@
         <h1 class="text-3xl font-bold tracking-tight">Online Magazine</h1>
         <div class="flex items-center justify-between mt-2 mb-4">
             <p class="text-gray-600 mt-2">Fresh stories every day.</p>
-            <a
-                    href="{{ route('articles.create') }}"
-                    class="inline-flex px-3 py-1 bg-blue-600 text-white h-a rounded hover:bg-blue-700 text-sm"
-                >
-                    + New Article
+            @auth
+                @if(auth()->user()->role === 'editor' || auth()->user()->role === 'admin')
+                <a
+                        href="{{ route('articles.create') }}"
+                        class="inline-flex px-3 py-1 bg-blue-600 text-white h-a rounded hover:bg-blue-700 text-sm"
+                    >
+                        + New Article
                 </a>
+                @endif
+            @endauth
         </div>
     </header>
 

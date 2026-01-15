@@ -4,13 +4,16 @@
             <h1 class="text-3xl font-bold tracking-tight">
                 {{ $article->title }}
             </h1>
-
-            <a
-                href="{{ route('articles.edit', $article->slug) }}"
-                class="inline-flex px-3 mr-6 mt-4 py-1 bg-gray-600 text-white rounded hover:bg-gray-700 text-sm"
-            >
-                Edit
-            </a>
+            @auth
+                @if(auth()->user()->role === 'editor' || auth()->user()->role === 'admin')
+                <a
+                    href="{{ route('articles.edit', $article->slug) }}"
+                    class="inline-flex px-3 mr-6 mt-4 py-1 bg-gray-600 text-white rounded hover:bg-gray-700 text-sm"
+                >
+                    Edit
+                </a>
+                @endif
+            @endauth
 
         </div>
 
