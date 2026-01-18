@@ -4,6 +4,8 @@ namespace App\Livewire\Articles;
 
 use Livewire\Component;
 use App\Models\Article;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Redirect;
 
 class Edit extends Component
 {
@@ -37,6 +39,15 @@ class Edit extends Component
         while (Article::where('slug', $slug)->exists()) {
             $slug = $baseSlug !== '' ? "{$baseSlug}-{$n}" : Str::random(10);
             $n++;
+        }
+
+        if(str_contains($this->body, '<script'))
+        {
+            $this->body=str_replace('<script', '&lt;script', $this->body);
+        }
+        if(str_contains($this->body, '</script>'))
+        {
+            $this->body=str_replace('</script>', '&lt;/script&gt;', $this->body);
         }
 
         $this->article->update([
