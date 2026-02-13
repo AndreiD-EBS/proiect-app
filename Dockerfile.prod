@@ -1,0 +1,38 @@
+FROM php:8.2-cli
+
+RUN apt-get update && apt-get install -y \
+    libzip-dev \
+    libonig-dev \
+    libxml2-dev \
+    zip \
+    unzip \
+    curl \
+    git \
+    npm \
+    && docker-php-ext-install \
+        pdo_mysql \
+        mbstring \
+        xml \
+        zip \
+        opcache
+
+WORKDIR /app
+
+COPY . /app
+
+RUN curl -sS https://getcomposer.org/installer | php \
+    -- --install-dir=/usr/local/bin --filename=composer
+
+RUN composer install --no-dev --optimize-autoloader --no-interaction
+
+RUN rm -f bootstrap/cache/*.php || true
+
+RUN php artisan optimize:clear
+
+
+RUN npm ci && npm run build
+
+EXPOSE 8080
+
+CMD sh -c "rm -f bootstrap/cache/*.php || true && php artisan serve --host=0.0.0.0 --port=8080"
+
