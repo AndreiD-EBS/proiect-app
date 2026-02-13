@@ -39,6 +39,19 @@
             @if ($article->published_at)
                 <span>• {{ $article->published_at->format('M j, Y') }}</span>
             @endif
+
+                @if($filled_like_button)
+                <button type="button" class="btn btn-block btn-primary text-xl" wire:click.throttle="toggleLike({{$article->id}})">
+                    <i class="fa-solid fa-thumbs-up"></i>
+                </button>
+                @else
+                <button type="button" class="btn btn-block btn-primary text-xl" wire:click.throttle="toggleLike({{$article->id}})">
+                    <i class="fa-regular fa-thumbs-up"></i>
+                </button>
+                @endif
+                
+            
+            <span> {{ $likeCount }} </span>
         </div>
     </header>
 
