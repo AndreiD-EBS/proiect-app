@@ -16,6 +16,7 @@ class Edit extends Component
     public ?string $category = null;
     public ?string $author_name = null;
     public ?string $published_at = null;
+    public ?bool $published=true;
     public string $body = '';
 
     public function mount(string $slug): void
@@ -28,6 +29,7 @@ class Edit extends Component
         $this->author_name = $this->article->author_name;
         $this->published_at = optional($this->article->published_at)->format('Y-m-d\TH:i');
         $this->body = $this->article->body;
+        $this->published = $this->article->is_published;
     }
 
     public function save(): void
@@ -57,6 +59,7 @@ class Edit extends Component
             'category' => $this->category,
             'author_name' => $this->author_name,
             'published_at' => $this->published_at,
+            'is_published' => $this->published,
             'body' => $this->body,
         ]);
 

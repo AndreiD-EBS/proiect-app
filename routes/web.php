@@ -28,7 +28,7 @@ use App\Livewire\Admin\UserManagement;
 
 
 Route::view('profile', 'profile')
-    ->middleware(['auth', 'employee'])
+    ->middleware(['auth'])
     ->name('profile');
 
 Route::redirect('/dashboard', '/');

@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use App\Models\Article;
 
 class User extends Authenticatable
 {
@@ -42,4 +44,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+
+    public function likedArticles() : BelongsToMany
+    {
+        return $this->belongsToMany(Article::class, 'userlikes', 'user_id', 'article_id');
+    }
 }

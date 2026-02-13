@@ -43,7 +43,7 @@ class Create extends Component
             'author_name' => $this->author_name,
             'published_at' => $this->published_at,
             'body' => $this->body,
-            'is_published' => $this->published_at ? true : false,
+            'is_published' => true,
         ]);
 
         $this->redirectRoute('articles.show', $article->slug);
